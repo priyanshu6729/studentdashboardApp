@@ -57,8 +57,10 @@ Copy code
 
 ### 1. Clone the Repository
 
+```bash
 git clone https://github.com/your-username/student-dashboard.git
 cd student-dashboard
+```
 2. Install Dependencies
 bash
 Copy code
@@ -121,5 +123,3 @@ Firebase
 
 Lucide Icons
 
-
-```bash
