@@ -5,6 +5,14 @@ import { AuthProvider } from "@/contexts/auth-context"
 import { Toaster } from "@/components/ui/toaster"
 import { ThemeProvider } from "@/components/theme-provider"
 
+
+export const metadata: Metadata = {
+  title: "Student Dashboard",
+  description: "A student management dashboard with Firebase authentication",
+  generator: "v0.dev",
+}
+
+
 export default function RootLayout({
   children,
 }: Readonly<{
