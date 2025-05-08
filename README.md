@@ -32,19 +32,9 @@ A modern, responsive dashboard built with **Next.js**, designed to help users ma
 
 ## 📁 Project Structure
 
-.
-├── app/ # App router pages
-│ ├── layout.tsx # Global layout
-│ └── page.tsx # Homepage/dashboard
-├── components/
-│ ├── auth/ # Login & Signup modals
-│ └── ui/ # Reusable UI components
-├── contexts/
-│ └── auth-context.tsx # Auth state management
-├── hooks/ # Custom React hooks
-├── lib/ # Firebase config & utils
-├── public/ # Static assets
-└── styles/ # Global CSS (if any)
+
+<img width="415" alt="Screenshot 2025-05-08 at 22 03 52" src="https://github.com/user-attachments/assets/b7c5541d-eaf7-4abd-9c3a-58d4198680e3" />
+
 
 yaml
 Copy code
