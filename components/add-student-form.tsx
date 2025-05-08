@@ -1,27 +1,24 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useState } from "react"
-import { z } from "zod"
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useState } from "react";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const studentSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters" }),
   email: z.string().email({ message: "Invalid email address" }),
   grade: z.string().min(1, { message: "Grade is required" }),
   course: z.string().min(1, { message: "Course is required" }),
-})
+});
 
-type StudentFormData = z.infer<typeof studentSchema>
+type StudentFormData = z.infer<typeof studentSchema>;
 
 interface AddStudentFormProps {
-  onAddStudent: (student: StudentFormData) => void
+  onAddStudent: (student: StudentFormData) => void;
 }
 
 export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
@@ -30,28 +27,28 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
     email: "",
     grade: "",
     course: "",
-  })
+  });
 
-  const [errors, setErrors] = useState<Partial<Record<keyof StudentFormData, string>>>({})
+  const [errors, setErrors] = useState<Partial<Record<keyof StudentFormData, string>>>({});
 
   const handleChange = (field: keyof StudentFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }));
 
     // Clear error when user types
     if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }))
+      setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       // Validate form data
-      studentSchema.parse(formData)
+      studentSchema.parse(formData);
 
       // Submit data
-      onAddStudent(formData)
+      onAddStudent(formData);
 
       // Reset form
       setFormData({
@@ -59,21 +56,21 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
         email: "",
         grade: "",
         course: "",
-      })
-      setErrors({})
+      });
+      setErrors({});
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Convert Zod errors to our format
-        const formattedErrors: Partial<Record<keyof StudentFormData, string>> = {}
+        const formattedErrors: Partial<Record<keyof StudentFormData, string>> = {};
         error.errors.forEach((err) => {
           if (err.path[0]) {
-            formattedErrors[err.path[0] as keyof StudentFormData] = err.message
+            formattedErrors[err.path[0] as keyof StudentFormData] = err.message;
           }
-        })
-        setErrors(formattedErrors)
+        });
+        setErrors(formattedErrors);
       }
     }
-  }
+  };
 
   return (
     <Card>
@@ -149,5 +146,5 @@ export function AddStudentForm({ onAddStudent }: AddStudentFormProps) {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }

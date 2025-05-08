@@ -1,14 +1,15 @@
-"use client"
+"use client";
 
-import type { Student } from "@/components/student-dashboard"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import type { Student } from "@/components/student-dashboard";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 interface StudentListProps {
-  students: Student[]
-  onSelectStudent: (student: Student) => void
+  students: Student[];
+  onSelectStudent: (student: Student) => void;
+  selectedStudentId: string | null;
 }
 
-export function StudentList({ students, onSelectStudent }: StudentListProps) {
+export function StudentList({ students, onSelectStudent, selectedStudentId }: StudentListProps) {
   return (
     <div className="rounded-md border">
       <Table>
@@ -30,7 +31,7 @@ export function StudentList({ students, onSelectStudent }: StudentListProps) {
             students.map((student) => (
               <TableRow
                 key={student.id}
-                className="cursor-pointer hover:bg-muted"
+                className={`cursor-pointer hover:bg-muted ${selectedStudentId === student.id ? 'bg-muted' : ''}`}
                 onClick={() => onSelectStudent(student)}
               >
                 <TableCell className="font-medium">{student.name}</TableCell>
@@ -42,5 +43,5 @@ export function StudentList({ students, onSelectStudent }: StudentListProps) {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

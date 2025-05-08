@@ -1,10 +1,10 @@
-import type { Student } from "@/components/student-dashboard"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Lock } from "lucide-react"
+import type { Student } from "@/components/student-dashboard";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Lock } from "lucide-react";
 
 interface StudentDetailsProps {
-  student: Student
-  isLoggedIn: boolean
+  student: Student;
+  isLoggedIn: boolean;
 }
 
 export function StudentDetails({ student, isLoggedIn }: StudentDetailsProps) {
@@ -19,7 +19,7 @@ export function StudentDetails({ student, isLoggedIn }: StudentDetailsProps) {
           <p className="text-muted-foreground">Please log in to view student details</p>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -48,5 +48,5 @@ export function StudentDetails({ student, isLoggedIn }: StudentDetailsProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

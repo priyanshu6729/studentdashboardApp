@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { setLocalStorage } from "@/lib/local-storage"
 
 interface LoginFormProps {
   onSuccess?: () => void
@@ -36,7 +37,8 @@ export function LoginForm({ onSuccess, onSignUpClick }: LoginFormProps) {
     setIsLoading(true)
 
     try {
-      await signIn(email, password)
+      const signedInUser = await signIn(email, password)
+      setLocalStorage("user", signedInUser)
       if (onSuccess) onSuccess()
     } catch (error) {
       console.error("Login error:", error)

@@ -9,6 +9,7 @@ import { StudentDetails } from "@/components/student-details"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useLocalStorage } from "@/hooks/use-local-storage"
 
 export type Student = {
   id: string
@@ -24,7 +25,7 @@ interface StudentDashboardProps {
 
 export function StudentDashboard({ isLoggedIn: propIsLoggedIn }: StudentDashboardProps) {
   const { user } = useAuth()
-  const [students, setStudents] = useState<Student[]>([
+  const [students, setStudents] = useLocalStorage<Student[]>("students", [
     {
       id: "1",
       name: "John Doe",
@@ -148,7 +149,7 @@ export function StudentDashboard({ isLoggedIn: propIsLoggedIn }: StudentDashboar
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-4">
               <h2 className="text-2xl font-bold">Students</h2>
-              <StudentList students={filteredStudents} onSelectStudent={setSelectedStudent} />
+              <StudentList students={filteredStudents} onSelectStudent={setSelectedStudent} selectedStudentId={null} />
             </div>
 
             <div className="space-y-4">

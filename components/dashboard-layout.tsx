@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import { Book, GraduationCap, LayoutDashboard, LogIn, Menu, Users } from "lucide-react"
 import { useAuth } from "@/contexts/auth-context"
@@ -11,12 +11,26 @@ import { CoursesView } from "@/components/courses-view"
 import { UserDropdown } from "@/components/user-dropdown"
 import { AuthModal } from "@/components/auth/auth-modal"
 
-export function DashboardLayout({ children }: { children: React.ReactNode }) {
+export function DashboardLayout({ children }: { children: React.ReactElement<{ isLoggedIn: boolean }> }) {
   const { user, loading } = useAuth()
   const [activeView, setActiveView] = useState("dashboard")
+
+  useEffect(() => {
+  const storedView = localStorage.getItem("activeView")
+  if (storedView) {
+    setActiveView(storedView)
+  }
+  }, [])
+
   const [authModalOpen, setAuthModalOpen] = useState(false)
 
   const isLoggedIn = !!user
+  
+  const handleSetActiveView = (view: string) => {
+    setActiveView(view)
+    localStorage.setItem("activeView", view)
+  }
+  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -38,7 +52,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <Link
                   href="#"
                   className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-accent"
-                  onClick={() => setActiveView("dashboard")}
+                  onClick={() => handleSetActiveView("dashboard")}
                 >
                   <LayoutDashboard className="h-5 w-5" />
                   Dashboard
@@ -46,7 +60,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <Link
                   href="#"
                   className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-accent"
-                  onClick={() => setActiveView("students")}
+                  onClick={() => handleSetActiveView("students")}
                 >
                   <Users className="h-5 w-5" />
                   Students
@@ -54,7 +68,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 <Link
                   href="#"
                   className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-accent"
-                  onClick={() => setActiveView("courses")}
+                  onClick={() => handleSetActiveView("courses")}
                 >
                   <Book className="h-5 w-5" />
                   Courses
@@ -93,7 +107,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 rounded-lg px-3 py-2 ${
                 activeView === "dashboard" ? "bg-accent text-accent-foreground" : "hover:bg-accent"
               }`}
-              onClick={() => setActiveView("dashboard")}
+              onClick={() => handleSetActiveView("dashboard")}
             >
               <LayoutDashboard className="h-5 w-5" />
               Dashboard
@@ -103,7 +117,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 rounded-lg px-3 py-2 ${
                 activeView === "students" ? "bg-accent text-accent-foreground" : "hover:bg-accent"
               }`}
-              onClick={() => setActiveView("students")}
+              onClick={() => handleSetActiveView("students")}
             >
               <Users className="h-5 w-5" />
               Students
@@ -113,7 +127,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               className={`flex items-center gap-2 rounded-lg px-3 py-2 ${
                 activeView === "courses" ? "bg-accent text-accent-foreground" : "hover:bg-accent"
               }`}
-              onClick={() => setActiveView("courses")}
+              onClick={() => handleSetActiveView("courses")}
             >
               <Book className="h-5 w-5" />
               Courses
@@ -121,7 +135,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </nav>
         </aside>
         <main className="flex-1 p-4 md:p-6">
-          {activeView === "dashboard" && React.cloneElement(children as React.ReactElement, { isLoggedIn })}
+          {activeView === "dashboard" && React.cloneElement(children, { isLoggedIn })}
           {activeView === "students" && <StudentsView isLoggedIn={isLoggedIn} />}
           {activeView === "courses" && <CoursesView isLoggedIn={isLoggedIn} />}
         </main>
