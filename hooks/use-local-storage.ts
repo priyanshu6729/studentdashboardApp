@@ -5,7 +5,9 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     if (typeof window === "undefined") return initialValue;
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+
+      // ✅ Handle invalid JSON or "undefined"
+      return item && item !== "undefined" ? JSON.parse(item) : initialValue;
     } catch (error) {
       console.warn("Error reading localStorage", error);
       return initialValue;
@@ -14,7 +16,9 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
 
   useEffect(() => {
     try {
-      window.localStorage.setItem(key, JSON.stringify(storedValue));
+      if (storedValue !== undefined) {
+        window.localStorage.setItem(key, JSON.stringify(storedValue));
+      }
     } catch (error) {
       console.warn("Error writing to localStorage", error);
     }
