@@ -117,6 +117,7 @@ This project is open-source under the MIT License.
 Contributions are welcome! Feel free to open issues or submit pull requests.
 
 🙏 Acknowledgments
+
 ShadCN UI
 
 Firebase
